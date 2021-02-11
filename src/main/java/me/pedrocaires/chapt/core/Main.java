@@ -24,7 +24,7 @@ public class Main {
         Tomcat tomcat = new Tomcat();
 
         //The port we will run is 8080
-        tomcat.setPort(-1);
+        tomcat.setPort(8080);
 
         StandardContext ctx = (StandardContext) tomcat.addWebapp("", new File(webappDirLocation).getAbsolutePath());
 
