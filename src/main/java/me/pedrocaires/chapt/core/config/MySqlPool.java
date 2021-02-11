@@ -3,7 +3,7 @@ package me.pedrocaires.chapt.core.config;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import com.zaxxer.hikari.pool.HikariPool;
-import me.pedrocaires.chapt.core.property.Properties;
+import me.pedrocaires.chapt.core.property.ChaptProperties;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -29,19 +29,19 @@ public class MySqlPool {
     private static DataSource dataSource() {
 
         HikariConfig hikariConfig = new HikariConfig();
-        hikariConfig.setDriverClassName(Properties.getPropertyString("mysqlDriverClassName"));
-        hikariConfig.setJdbcUrl(Properties.getPropertyString("jdbcUrl"));
-        hikariConfig.setUsername(Properties.getPropertyString("username"));
-        hikariConfig.setPassword(Properties.getPropertyString("password"));
+        hikariConfig.setDriverClassName(ChaptProperties.getString("mysqlDriverClassName"));
+        hikariConfig.setJdbcUrl(ChaptProperties.getString("jdbcUrl"));
+        hikariConfig.setUsername(ChaptProperties.getString("username"));
+        hikariConfig.setPassword(ChaptProperties.getString("password"));
 
-        hikariConfig.setMaximumPoolSize(Properties.getPropertyInt("maximumPoolSize"));
-        hikariConfig.setConnectionTestQuery(Properties.getPropertyString("connectionTestQuery"));
-        hikariConfig.setPoolName(Properties.getPropertyString("poolName"));
+        hikariConfig.setMaximumPoolSize(ChaptProperties.getInt("maximumPoolSize"));
+        hikariConfig.setConnectionTestQuery(ChaptProperties.getString("connectionTestQuery"));
+        hikariConfig.setPoolName(ChaptProperties.getString("poolName"));
 
-        hikariConfig.addDataSourceProperty("dataSource.cachePrepStmts", Properties.getPropertyString("cachePrepStmts"));
-        hikariConfig.addDataSourceProperty("dataSource.prepStmtCacheSize", Properties.getPropertyString("prepStmtCacheSize"));
-        hikariConfig.addDataSourceProperty("dataSource.prepStmtCacheSqlLimit", Properties.getPropertyString("prepStmtCacheSqlLimit"));
-        hikariConfig.addDataSourceProperty("dataSource.useServerPrepStmts", Properties.getPropertyString("useServerPrepStmts"));
+        hikariConfig.addDataSourceProperty("dataSource.cachePrepStmts", ChaptProperties.getString("cachePrepStmts"));
+        hikariConfig.addDataSourceProperty("dataSource.prepStmtCacheSize", ChaptProperties.getString("prepStmtCacheSize"));
+        hikariConfig.addDataSourceProperty("dataSource.prepStmtCacheSqlLimit", ChaptProperties.getString("prepStmtCacheSqlLimit"));
+        hikariConfig.addDataSourceProperty("dataSource.useServerPrepStmts", ChaptProperties.getString("useServerPrepStmts"));
 
         try {
             return new HikariDataSource(hikariConfig);

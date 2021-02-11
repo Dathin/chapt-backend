@@ -83,13 +83,15 @@ class ChatWebSocketTest implements NoParameterConstructorTest {
         assertEquals(session, ChatWebSocket.USERS.get(userId));
     }
 
+    //TODO: logger
     @Test
     void shouldNotAuthenticateWhenInvalidToken() {
         var to = 2;
         var invalidToken = "Bearer eyJhbGciOiJIUzM4NCJ9.eyJleHAiOjE2MDY3OTc3Nzl9.Q5sKWROwbq-sz4vE9y4aHF2_Owkvj0vXMvjRh50Iw88_dDmdCGcSgzHgJTuogVUW";
+        var message = new Message(to, invalidToken);
         mockUserPrincipal(new UserPrincipal());
 
-        assertThrows(InvalidJwtException.class, () -> chatWebSocket.onMessage(session, new Message(to, invalidToken)));
+        assertThrows(InvalidJwtException.class, () -> chatWebSocket.onMessage(session, message));
     }
 
     @Test

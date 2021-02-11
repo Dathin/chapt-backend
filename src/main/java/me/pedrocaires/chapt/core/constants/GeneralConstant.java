@@ -2,6 +2,9 @@ package me.pedrocaires.chapt.core.constants;
 
 public class GeneralConstant {
 
+    private GeneralConstant() {
+    }
+
     public static final String USER_ID = "userId";
 
     public static final String PRINCIPAL = "principal";

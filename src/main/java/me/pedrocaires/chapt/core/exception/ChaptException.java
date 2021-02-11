@@ -5,7 +5,7 @@ public abstract class ChaptException extends RuntimeException {
     protected final String message;
     protected final int statusCode;
 
-    public ChaptException(String message, int statusCode) {
+    protected ChaptException(String message, int statusCode) {
         this.message = message;
         this.statusCode = statusCode;
     }

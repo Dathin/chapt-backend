@@ -6,7 +6,7 @@ import java.util.*;
 
 import static me.pedrocaires.chapt.core.constants.GeneralConstant.EMPTY_STRING;
 
-public class Properties {
+public class ChaptProperties {
 
     private static final Map<String, String> PROPERTIES;
 
@@ -17,16 +17,16 @@ public class Properties {
         PROPERTIES = Collections.unmodifiableMap(mapListedProperties(properties));
     }
 
-    private Properties() {
+    private ChaptProperties() {
 
     }
 
-    public static String getPropertyString(String key) {
+    public static String getString(String key) {
         var property = PROPERTIES.get(key);
         return property == null ? EMPTY_STRING : property;
     }
 
-    public static int getPropertyInt(String key) {
+    public static int getInt(String key) {
         try {
             return Integer.parseInt(PROPERTIES.get(key));
         } catch (NumberFormatException ex) {
@@ -48,7 +48,7 @@ public class Properties {
     }
 
     private static BufferedReader propertiesReader() {
-        var inputStream = Properties.class.getClassLoader().getResourceAsStream("props.txt");
+        var inputStream = ChaptProperties.class.getClassLoader().getResourceAsStream("props.txt");
         return new BufferedReader(new InputStreamReader(Objects.requireNonNull(inputStream)));
     }
 

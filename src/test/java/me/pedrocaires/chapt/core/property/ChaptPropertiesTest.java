@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class PropertiesTest {
+class ChaptPropertiesTest {
 
     String validStringKey = "validStringKey";
     String validStringValue = "validString";
@@ -20,50 +20,50 @@ class PropertiesTest {
 
     @Test
     void shouldLoadString() {
-        var stringValue = Properties.getPropertyString(validStringKey);
+        var stringValue = ChaptProperties.getString(validStringKey);
 
         assertEquals(validStringValue, stringValue);
     }
 
     @Test
     void shouldBeEmptyStringWhenKeyDoesNotExists() {
-        var stringValue = Properties.getPropertyString(invalidStringKey);
+        var stringValue = ChaptProperties.getString(invalidStringKey);
 
         assertEquals("", stringValue);
     }
 
     @Test
     void shouldLoadInt() {
-        var intValue = Properties.getPropertyInt(validIntKey);
+        var intValue = ChaptProperties.getInt(validIntKey);
 
         assertEquals(validIntValue, intValue);
     }
 
     @Test
     void shouldBe0WhenKeyDoesNotExists() {
-        var intValue = Properties.getPropertyInt(invalidIntKey);
+        var intValue = ChaptProperties.getInt(invalidIntKey);
 
         assertEquals(0, intValue);
     }
 
     @Test
     void shouldBe0WhenKeyIsString() {
-        var intValue = Properties.getPropertyInt(validStringKey);
+        var intValue = ChaptProperties.getInt(validStringKey);
 
         assertEquals(0, intValue);
     }
 
     @Test
     void shouldReadEnvironmentVariables() {
-        var envVar = Properties.getPropertyString(envVarKey);
+        var envVar = ChaptProperties.getString(envVarKey);
 
         assertEquals(System.getenv("PATH"), envVar);
     }
 
     @Test
     void shouldNotReadNonEnvironmentVariableSyntax() {
-        var stringValue1 = Properties.getPropertyString(notEnvVar1Key);
-        var stringValue2 = Properties.getPropertyString(notEnvVar2Key);
+        var stringValue1 = ChaptProperties.getString(notEnvVar1Key);
+        var stringValue2 = ChaptProperties.getString(notEnvVar2Key);
 
         assertEquals(notEnvVar1, stringValue1);
         assertEquals(notEnvVar2, stringValue2);

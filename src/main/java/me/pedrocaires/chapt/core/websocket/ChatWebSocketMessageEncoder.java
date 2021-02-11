@@ -21,9 +21,11 @@ public class ChatWebSocketMessageEncoder implements Encoder.Text<Message> {
 
     @Override
     public void init(EndpointConfig endpointConfig) {
+        //Interface forces us to implement this method, but we will just ignore it
     }
 
     @Override
     public void destroy() {
+        //Interface forces us to implement this method, but we will just ignore it
     }
 }

@@ -6,10 +6,14 @@ import org.apache.catalina.core.StandardContext;
 import org.apache.catalina.startup.Tomcat;
 import org.apache.catalina.webresources.DirResourceSet;
 import org.apache.catalina.webresources.StandardRoot;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 
 public class Main {
+
+    public static final Logger LOGGER = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) {
         runTomcat();
@@ -20,7 +24,7 @@ public class Main {
         Tomcat tomcat = new Tomcat();
 
         //The port we will run is 8080
-        tomcat.setPort(8080);
+        tomcat.setPort(-1);
 
         StandardContext ctx = (StandardContext) tomcat.addWebapp("", new File(webappDirLocation).getAbsolutePath());
 
@@ -37,7 +41,8 @@ public class Main {
 
         try {
             tomcat.start();
-        } catch (LifecycleException ignored) {
+        } catch (LifecycleException ex) {
+            LOGGER.error("Failed to start tomcat", ex);
         }
         tomcat.getServer().await();
     }

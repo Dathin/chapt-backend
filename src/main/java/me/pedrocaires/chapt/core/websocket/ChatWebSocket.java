@@ -72,7 +72,7 @@ public class ChatWebSocket {
     }
 
     @OnError
-    public void onError(Session session, Throwable ignored) throws Throwable {
+    public void onError(Session session, Throwable ignored) throws IOException {
         session.close();
     }
 
