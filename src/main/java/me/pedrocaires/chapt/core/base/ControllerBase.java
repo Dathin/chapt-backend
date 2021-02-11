@@ -43,14 +43,11 @@ public abstract class ControllerBase extends HttpServlet {
             try {
                 writeSuccessObject(getEndpointResponse(req, resp, httpMethod), resp);
             } catch (ChaptException ex) {
-                ex.printStackTrace();
                 catchChaptException(ex, resp);
             } catch (Exception ex) {
-                ex.printStackTrace();
                 catchUnexpectedException(resp);
             }
         } catch (IOException ex) {
-            ex.printStackTrace();
             throw new UnexpectedException();
         }
     }
