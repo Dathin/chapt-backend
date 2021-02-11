@@ -1,7 +1,5 @@
 package me.pedrocaires.chapt.core.testconfig;
 
-import me.pedrocaires.chapt.core.constants.GeneralConstant;
-
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 import java.sql.Connection;
