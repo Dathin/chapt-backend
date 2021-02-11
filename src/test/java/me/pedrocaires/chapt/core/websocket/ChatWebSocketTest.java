@@ -83,7 +83,6 @@ class ChatWebSocketTest implements NoParameterConstructorTest {
         assertEquals(session, ChatWebSocket.USERS.get(userId));
     }
 
-    //TODO: logger
     @Test
     void shouldNotAuthenticateWhenInvalidToken() {
         var to = 2;
@@ -167,6 +166,7 @@ class ChatWebSocketTest implements NoParameterConstructorTest {
     @Test
     void shouldClose() throws Throwable {
         var th = new Throwable();
+        mockUserPrincipal(new UserPrincipal());
 
         chatWebSocket.onError(session, th);
 
