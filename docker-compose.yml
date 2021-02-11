@@ -1,0 +1,9 @@
+version: "3.6"
+services:
+  mysql:
+    image: mysql:8.0.22
+    ports:
+    - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: local-pw
+    restart: always

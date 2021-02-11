@@ -1,0 +1,8 @@
+mysqlDriverClassName=com.mysql.cj.jdbc.Driver
+maximumPoolSize=1
+validStringKey=validString
+validIntKey=1
+invalidNumber=validString
+envVar=${PATH}
+notEnvVar1=${PATH
+notEnvVar2=PATH}

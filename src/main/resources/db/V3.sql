@@ -1,0 +1,7 @@
+CREATE TABLE MESSAGES
+(
+    ID      INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `FROM`  INT          NOT NULL,
+    `TO`    INT          NOT NULL,
+    CONTENT VARCHAR(255) NOT NULL
+);

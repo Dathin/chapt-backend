@@ -1,0 +1,48 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="1.0" author="pedro.caires">
+        <comment>DDL Users Table</comment>
+        <sqlFile
+                dbms="mysql"
+                encoding="utf8"
+                endDelimiter=";"
+                path="db/V1.0.sql"
+                relativeToChangelogFile="true"
+                splitStatements="true"
+                stripComments="true"/>
+        <rollback>
+            <sqlFile path="db/V1.0R.sql"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="2.0" author="pedro.caires">
+        <comment>DDL Contacts Table</comment>
+        <sqlFile
+                dbms="mysql"
+                encoding="utf8"
+                endDelimiter=";"
+                path="db/V2.0.sql"
+                relativeToChangelogFile="true"
+                splitStatements="true"
+                stripComments="true"/>
+        <rollback>
+            <sqlFile path="db/V2.0R.sql"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="3" author="pedro.caires">
+        <comment>DDL Messages Table</comment>
+        <sqlFile
+                dbms="mysql"
+                encoding="utf8"
+                endDelimiter=";"
+                path="db/V3.sql"
+                relativeToChangelogFile="true"
+                splitStatements="true"
+                stripComments="true"/>
+        <rollback>
+            <sqlFile path="db/V3R.sql"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
