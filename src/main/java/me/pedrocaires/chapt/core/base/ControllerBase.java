@@ -5,7 +5,6 @@ import me.pedrocaires.chapt.core.exception.ChaptException;
 import me.pedrocaires.chapt.core.exception.MethodNotAllowed;
 import me.pedrocaires.chapt.core.exception.UnexpectedException;
 import me.pedrocaires.chapt.core.json.JsonService;
-import me.pedrocaires.chapt.core.websocket.ChatWebSocket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

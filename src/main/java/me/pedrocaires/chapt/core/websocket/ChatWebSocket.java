@@ -78,7 +78,7 @@ public class ChatWebSocket {
     @OnError
     public void onError(Session session, Throwable th) throws IOException {
         var userPrincipalId = getUserPrincipal(session).getUserId();
-        LOGGER.error(String.format("User %s had a websocket problem", userPrincipalId), th);
+        LOGGER.error("User {} had a websocket problem", userPrincipalId, th);
         session.close();
     }
 
