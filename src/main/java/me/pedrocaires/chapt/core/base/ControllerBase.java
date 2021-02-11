@@ -20,52 +20,39 @@ public abstract class ControllerBase extends HttpServlet {
         throw new MethodNotAllowed();
     }
 
-    public <T> T doCustomGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, SQLException {
+    public <T> T doCustomGet(HttpServletRequest req, HttpServletResponse resp) throws SQLException {
         throw new MethodNotAllowed();
     }
 
-//    public <T> T doCustomPut(HttpServletRequest req, HttpServletResponse resp) {
-//        throw new MethodNotAllowed();
-//    }
-//
-//    public <T> T doCustomDelete(HttpServletRequest req, HttpServletResponse resp) {
-//        throw new MethodNotAllowed();
-//    }
-
-
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         handleRequest(req, resp, HttpMethod.GET);
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         handleRequest(req, resp, HttpMethod.POST);
     }
-
-//    @Override
-//    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-//        handleRequest(req, resp, HttpMethod.PUT);
-//    }
-//
-//    @Override
-//    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-//        handleRequest(req, resp, HttpMethod.DELETE);
-//    }
 
     protected int getUserId(HttpServletRequest req) {
         return (int) req.getAttribute(USER_ID);
     }
 
-    private void handleRequest(HttpServletRequest req, HttpServletResponse resp, HttpMethod httpMethod) throws IOException {
+    private void handleRequest(HttpServletRequest req, HttpServletResponse resp, HttpMethod httpMethod) {
+        try {
+            writeChaptResponse(req, resp, httpMethod);
+        } catch (IOException ex) {
+            throw new UnexpectedException();
+        }
+    }
+
+    private void writeChaptResponse(HttpServletRequest req, HttpServletResponse resp, HttpMethod httpMethod) throws IOException {
         try {
             writeSuccessObject(getEndpointResponse(req, resp, httpMethod), resp);
         } catch (ChaptException ex) {
-            ex.printStackTrace();
-            catchChaptException(ex, resp);
+            writeChaptException(ex, resp);
         } catch (Exception ex) {
-            ex.printStackTrace();
-            catchUnexpectedException(resp);
+            writeUnexpectedException(resp);
         }
     }
 
@@ -75,10 +62,6 @@ public abstract class ControllerBase extends HttpServlet {
                 return doCustomGet(req, resp);
             case POST:
                 return doCustomPost(req, resp);
-//            case PUT:
-//                return doCustomPut(req, resp);
-//            case DELETE:
-//                return doCustomDelete(req, resp);
             default:
                 throw new MethodNotAllowed();
         }
@@ -88,11 +71,11 @@ public abstract class ControllerBase extends HttpServlet {
         JsonService.writeJsonObjectToHttpServlet(object, 200, resp);
     }
 
-    private void catchChaptException(ChaptException ex, HttpServletResponse resp) throws IOException {
+    private void writeChaptException(ChaptException ex, HttpServletResponse resp) throws IOException {
         JsonService.writeJsonObjectToHttpServlet(ex.toErrorDto(), ex.getStatusCode(), resp);
     }
 
-    private void catchUnexpectedException(HttpServletResponse resp) throws IOException {
+    private void writeUnexpectedException(HttpServletResponse resp) throws IOException {
         JsonService.writeJsonObjectToHttpServlet(new UnexpectedException().toErrorDto(), 500, resp);
     }
 

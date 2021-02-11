@@ -20,6 +20,8 @@ import static me.pedrocaires.chapt.core.testconfig.Assertions.assertServletStatu
 import static me.pedrocaires.chapt.core.testconfig.Assertions.assertServletWroteObject;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -133,5 +135,18 @@ class ControllerBaseTest {
 
         assertServletStatusCode(resp, statusCode);
         assertServletWroteObject(printWriter, JsonService.writeJsonObject(new UnexpectedException().toErrorDto()));
+    }
+
+    @Test
+    void shouldThrowUnexpectedExceptionWhenServletThrowsIoException() throws IOException {
+        var controllerBase = new ControllerBase() {
+        };
+        when(resp.getWriter()).thenReturn(printWriter);
+        doAnswer(invocationOnMock -> {
+            throw new IOException();
+        })
+                .when(printWriter).write(anyString());
+
+        assertThrows(UnexpectedException.class, () -> controllerBase.doGet(req, resp));
     }
 }
