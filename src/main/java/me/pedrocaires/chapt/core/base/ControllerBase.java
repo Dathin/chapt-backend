@@ -40,15 +40,19 @@ public abstract class ControllerBase extends HttpServlet {
 
     private void handleRequest(HttpServletRequest req, HttpServletResponse resp, HttpMethod httpMethod) {
         try {
-            try {
-                writeSuccessObject(getEndpointResponse(req, resp, httpMethod), resp);
-            } catch (ChaptException ex) {
-                catchChaptException(ex, resp);
-            } catch (Exception ex) {
-                catchUnexpectedException(resp);
-            }
+            writeChaptResponse(req, resp, httpMethod);
         } catch (IOException ex) {
             throw new UnexpectedException();
+        }
+    }
+
+    private void writeChaptResponse(HttpServletRequest req, HttpServletResponse resp, HttpMethod httpMethod) throws IOException {
+        try {
+            writeSuccessObject(getEndpointResponse(req, resp, httpMethod), resp);
+        } catch (ChaptException ex) {
+            writeChaptException(ex, resp);
+        } catch (Exception ex) {
+            writeUnexpectedException(resp);
         }
     }
 
@@ -67,11 +71,11 @@ public abstract class ControllerBase extends HttpServlet {
         JsonService.writeJsonObjectToHttpServlet(object, 200, resp);
     }
 
-    private void catchChaptException(ChaptException ex, HttpServletResponse resp) throws IOException {
+    private void writeChaptException(ChaptException ex, HttpServletResponse resp) throws IOException {
         JsonService.writeJsonObjectToHttpServlet(ex.toErrorDto(), ex.getStatusCode(), resp);
     }
 
-    private void catchUnexpectedException(HttpServletResponse resp) throws IOException {
+    private void writeUnexpectedException(HttpServletResponse resp) throws IOException {
         JsonService.writeJsonObjectToHttpServlet(new UnexpectedException().toErrorDto(), 500, resp);
     }
 
