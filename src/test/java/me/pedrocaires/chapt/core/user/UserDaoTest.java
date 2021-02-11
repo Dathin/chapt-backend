@@ -16,7 +16,6 @@ import java.sql.SQLException;
 import static me.pedrocaires.chapt.core.testconfig.Assertions.assertClose;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith({MockitoExtension.class, MysqlPoolResolver.class})
@@ -61,14 +60,4 @@ class UserDaoTest {
         assertNotNull(user);
     }
 
-    @Test
-    void shouldCloseStatementAndResultSetWhenConnectionIsClosed() throws SQLException {
-        when(preparedStatement.executeQuery()).thenReturn(rs);
-        when(rs.next()).thenReturn(true).thenReturn(false);
-
-        var user = userDao.getUserLoginInfoByEMail(new UserLoginRequest());
-
-        verify(preparedStatement).close();
-        assertNotNull(user);
-    }
 }
