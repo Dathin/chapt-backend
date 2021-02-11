@@ -2,6 +2,7 @@ package me.pedrocaires.chapt.core.user;
 
 import me.pedrocaires.chapt.core.config.MySqlPool;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,7 +13,7 @@ public class UserDao {
     private static final String SELECT_USER_BY_EMAIL = "SELECT ID, E_MAIL, PASSWORD, SALT FROM USERS WHERE E_MAIL = ? LIMIT 1";
 
     public void insert(User user) throws SQLException {
-        try (var connection = MySqlPool.getConnection()) {
+        try (Connection connection = MySqlPool.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USER);
             preparedStatement.setString(1, user.geteMail());
             preparedStatement.setString(2, user.getPassword());
