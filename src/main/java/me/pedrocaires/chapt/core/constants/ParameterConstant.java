@@ -2,6 +2,9 @@ package me.pedrocaires.chapt.core.constants;
 
 public class ParameterConstant {
 
+    private ParameterConstant() {
+    }
+
     public static final String PAGE_SIZE = "pageSize";
 
     public static final String PAGE_INDEX = "pageIndex";

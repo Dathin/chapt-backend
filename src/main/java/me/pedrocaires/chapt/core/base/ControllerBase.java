@@ -5,6 +5,9 @@ import me.pedrocaires.chapt.core.exception.ChaptException;
 import me.pedrocaires.chapt.core.exception.MethodNotAllowed;
 import me.pedrocaires.chapt.core.exception.UnexpectedException;
 import me.pedrocaires.chapt.core.json.JsonService;
+import me.pedrocaires.chapt.core.websocket.ChatWebSocket;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +18,8 @@ import java.sql.SQLException;
 import static me.pedrocaires.chapt.core.constants.GeneralConstant.USER_ID;
 
 public abstract class ControllerBase extends HttpServlet {
+
+    public static final Logger LOGGER = LoggerFactory.getLogger(ControllerBase.class);
 
     public <T> T doCustomPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, SQLException {
         throw new MethodNotAllowed();
@@ -50,8 +55,10 @@ public abstract class ControllerBase extends HttpServlet {
         try {
             writeSuccessObject(getEndpointResponse(req, resp, httpMethod), resp);
         } catch (ChaptException ex) {
+            LOGGER.error("Chapt Internal Exception handled", ex);
             writeChaptException(ex, resp);
         } catch (Exception ex) {
+            LOGGER.error("Unexpected Exception handled", ex);
             writeUnexpectedException(resp);
         }
     }
