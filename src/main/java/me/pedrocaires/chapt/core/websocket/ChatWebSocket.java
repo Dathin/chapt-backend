@@ -72,8 +72,7 @@ public class ChatWebSocket {
     }
 
     @OnError
-    public void onError(Session session, Throwable th) throws Throwable {
-        th.printStackTrace();
+    public void onError(Session session, Throwable ignored) throws Throwable {
         session.close();
     }
 

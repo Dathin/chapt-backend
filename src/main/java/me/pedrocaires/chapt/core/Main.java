@@ -37,8 +37,7 @@ public class Main {
 
         try {
             tomcat.start();
-        } catch (LifecycleException e) {
-            e.printStackTrace();
+        } catch (LifecycleException ignored) {
         }
         tomcat.getServer().await();
     }
