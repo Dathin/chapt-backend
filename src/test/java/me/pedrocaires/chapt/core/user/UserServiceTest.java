@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -41,7 +42,7 @@ class UserServiceTest {
     @Test
     void shouldThrowAlreadyExistsException() throws SQLException {
         var userRequest = new UserRegisterRequest();
-        doThrow(AlreadyExistsException.class).when(userDao).insert(any());
+        doThrow(SQLIntegrityConstraintViolationException.class).when(userDao).insert(any());
 
         assertThrows(AlreadyExistsException.class, () -> userService.insert(userRequest));
     }

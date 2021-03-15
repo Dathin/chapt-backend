@@ -62,15 +62,14 @@ public abstract class ControllerBase extends HttpServlet {
         }
     }
 
-    private Object getEndpointResponse(HttpServletRequest req, HttpServletResponse resp, HttpMethod httpMethod) throws SQLException, IOException {
+    protected Object getEndpointResponse(HttpServletRequest req, HttpServletResponse resp, HttpMethod httpMethod) throws SQLException, IOException {
         switch (httpMethod) {
             case GET:
                 return doCustomGet(req, resp);
             case POST:
                 return doCustomPost(req, resp);
-            default:
-                throw new MethodNotAllowed();
         }
+        throw new MethodNotAllowed();
     }
 
     private void writeSuccessObject(Object object, HttpServletResponse resp) throws IOException {

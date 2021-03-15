@@ -1,4 +1,4 @@
-package me.pedrocaires.chapt.core.testconfig;
+package me.pedrocaires.chapt.core.testconfig.assertion;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;

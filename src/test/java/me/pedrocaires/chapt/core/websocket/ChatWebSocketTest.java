@@ -23,7 +23,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static me.pedrocaires.chapt.core.constants.GeneralConstant.PRINCIPAL;
-import static me.pedrocaires.chapt.core.testconfig.Assertions.assertClose;
+import static me.pedrocaires.chapt.core.testconfig.assertion.Assertions.assertClose;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;

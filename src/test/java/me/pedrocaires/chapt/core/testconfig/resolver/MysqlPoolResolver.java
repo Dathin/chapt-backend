@@ -1,4 +1,4 @@
-package me.pedrocaires.chapt.core.testconfig;
+package me.pedrocaires.chapt.core.testconfig.resolver;
 
 import me.pedrocaires.chapt.core.config.MySqlPool;
 import org.junit.jupiter.api.extension.ExtensionContext;
