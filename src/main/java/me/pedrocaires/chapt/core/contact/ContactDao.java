@@ -10,6 +10,8 @@ public class ContactDao {
 
     private static final String SELECT_CONTACTS = "SELECT U.ID, U.E_MAIL FROM CONTACTS AS C INNER JOIN USERS U on C.CONTACT_ID = U.ID WHERE USER_ID = ?";
 
+    private static final String INSERT_CONTACT = "INSERT INTO CONTACTS (USER_ID, CONTACT_ID) VALUES (?, ?)";
+
     public List<ContactResponse> getContactsByUserId(int userId) throws SQLException {
         try (var connection = MySqlPool.getConnection()) {
             try (var preparedStatement = connection.prepareStatement(SELECT_CONTACTS)) {
@@ -25,6 +27,16 @@ public class ContactDao {
                     }
                     return contactResponses;
                 }
+            }
+        }
+    }
+
+    public void insert(Contact contact) throws SQLException {
+        try(var connection = MySqlPool.getConnection()){
+            try(var preparedStatement = connection.prepareStatement(INSERT_CONTACT)){
+                preparedStatement.setInt(1, contact.getUserId());
+                preparedStatement.setInt(2, contact.getContactId());
+                preparedStatement.execute();
             }
         }
     }

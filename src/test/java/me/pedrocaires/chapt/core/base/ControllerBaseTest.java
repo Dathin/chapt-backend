@@ -1,5 +1,6 @@
 package me.pedrocaires.chapt.core.base;
 
+import me.pedrocaires.chapt.core.enumerator.HttpMethod;
 import me.pedrocaires.chapt.core.exception.ChaptException;
 import me.pedrocaires.chapt.core.exception.MethodNotAllowed;
 import me.pedrocaires.chapt.core.exception.UnexpectedException;
@@ -16,8 +17,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import static me.pedrocaires.chapt.core.constants.GeneralConstant.USER_ID;
-import static me.pedrocaires.chapt.core.testconfig.Assertions.assertServletStatusCode;
-import static me.pedrocaires.chapt.core.testconfig.Assertions.assertServletWroteObject;
+import static me.pedrocaires.chapt.core.testconfig.assertion.Assertions.assertServletStatusCode;
+import static me.pedrocaires.chapt.core.testconfig.assertion.Assertions.assertServletWroteObject;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -144,9 +145,17 @@ class ControllerBaseTest {
         when(resp.getWriter()).thenReturn(printWriter);
         doAnswer(invocationOnMock -> {
             throw new IOException();
-        })
-                .when(printWriter).write(anyString());
+        }).when(printWriter).write(anyString());
 
         assertThrows(UnexpectedException.class, () -> controllerBase.doGet(req, resp));
+    }
+
+    @Test
+    void shouldThrowMethodNotAllowedExceptionWhenUnhandledCustomMethod() {
+        HttpMethod unhandledCustomMethod = HttpMethod.OPTIONS;
+        var controllerBase = new ControllerBase(){
+        };
+
+        assertThrows(MethodNotAllowed.class, () -> controllerBase.getEndpointResponse(req, resp, unhandledCustomMethod));
     }
 }

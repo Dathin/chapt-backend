@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import static me.pedrocaires.chapt.core.testconfig.Assertions.assertServletWroteObject;
-import static me.pedrocaires.chapt.core.testconfig.MockUtils.mockServletReader;
+import static me.pedrocaires.chapt.core.testconfig.assertion.Assertions.assertServletWroteObject;
+import static me.pedrocaires.chapt.core.testconfig.mock.MockUtils.mockServletReader;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
