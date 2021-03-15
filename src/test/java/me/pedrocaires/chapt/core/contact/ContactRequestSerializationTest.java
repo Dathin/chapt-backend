@@ -5,7 +5,7 @@ import me.pedrocaires.chapt.core.json.JsonService;
 import me.pedrocaires.chapt.core.testinterface.SerializationTest;
 import org.junit.jupiter.api.Test;
 
-public class ContactRequestSerializationTest implements SerializationTest {
+class ContactRequestSerializationTest implements SerializationTest {
 
     @Test
     @Override
