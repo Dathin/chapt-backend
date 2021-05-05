@@ -35,15 +35,17 @@ public class ChatWebSocket {
 
     @OnOpen
     public void onOpen(Session session) {
+        LOGGER.info("Opened new session");
         var userProperties = session.getUserProperties();
         userProperties.put(PRINCIPAL, new UserPrincipal());
     }
 
     @OnMessage
     public void onMessage(Session session, Message message) throws IOException, EncodeException, SQLException {
+        LOGGER.info("Received message {}", message.getContent());
         handleAuthentication(session, message);
         messageService.insert(getUserPrincipal(session).getUserId(), message);
-        sendMessage(message);
+        broadcastMessage(message, getUserPrincipal(session).getUserId());
     }
 
     private void handleAuthentication(Session session, Message message) {
@@ -53,14 +55,16 @@ public class ChatWebSocket {
             userPrincipal.setAuthenticated(true);
             userPrincipal.setUserId(userId);
             USERS.put(userId, session);
+            LOGGER.info("Authenticated user {}", userPrincipal.getUserId());
         }
     }
 
-    private void sendMessage(Message message) throws IOException, EncodeException {
+    private void broadcastMessage(Message message, int userId) throws IOException, EncodeException {
         if (isToUserConnected(message.getTo())) {
             synchronized (USERS.get(message.getTo())) {
                 USERS.get(message.getTo()).getBasicRemote().sendObject(message);
             }
+            LOGGER.info("Sent message from {} to {}", userId, message.getTo());
         }
     }
 
@@ -70,16 +74,17 @@ public class ChatWebSocket {
 
     @OnClose
     public void onClose(Session session) throws IOException {
-        var userPrincipal = getUserPrincipal(session);
-        USERS.remove(userPrincipal.getUserId());
+        var userPrincipalId = getUserPrincipal(session).getUserId();
+        USERS.remove(userPrincipalId);
         session.close();
+        LOGGER.info("User {} disconnected", userPrincipalId);
     }
 
     @OnError
     public void onError(Session session, Throwable th) throws IOException {
         var userPrincipalId = getUserPrincipal(session).getUserId();
-        LOGGER.error("User {} had a websocket problem", userPrincipalId, th);
         session.close();
+        LOGGER.error("User {} had an error", userPrincipalId, th);
     }
 
     private UserPrincipal getUserPrincipal(Session session) {
