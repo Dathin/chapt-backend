@@ -1,6 +1,6 @@
 package me.pedrocaires.chapt.core.config;
 
-import me.pedrocaires.chapt.core.testconfig.MysqlPoolResolver;
+import me.pedrocaires.chapt.core.testconfig.resolver.MysqlPoolResolver;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,6 +1,6 @@
 package me.pedrocaires.chapt.core.contact;
 
-import me.pedrocaires.chapt.core.testconfig.MysqlPoolResolver;
+import me.pedrocaires.chapt.core.testconfig.resolver.MysqlPoolResolver;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,9 +13,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static me.pedrocaires.chapt.core.testconfig.Assertions.assertClose;
+import static me.pedrocaires.chapt.core.testconfig.assertion.Assertions.assertClose;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith({MockitoExtension.class, MysqlPoolResolver.class})
@@ -54,4 +55,13 @@ class ContactDaoTest {
         assertEquals(1, contactsByUser.size());
     }
 
+    @Test
+    void shouldInsertContact() throws SQLException {
+        var contact = new Contact(1, 2);
+        when(connection.prepareStatement(any())).thenReturn(preparedStatement);
+
+        contactDao.insert(contact);
+
+        verify(preparedStatement).execute();
+    }
 }

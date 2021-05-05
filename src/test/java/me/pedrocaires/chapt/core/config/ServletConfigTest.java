@@ -20,8 +20,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import static me.pedrocaires.chapt.core.constants.GeneralConstant.USER_ID;
-import static me.pedrocaires.chapt.core.testconfig.Assertions.assertServletStatusCode;
-import static me.pedrocaires.chapt.core.testconfig.Assertions.assertServletWroteObject;
+import static me.pedrocaires.chapt.core.testconfig.assertion.Assertions.assertServletStatusCode;
+import static me.pedrocaires.chapt.core.testconfig.assertion.Assertions.assertServletWroteObject;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
